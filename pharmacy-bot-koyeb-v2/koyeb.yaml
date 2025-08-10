@@ -1,0 +1,34 @@
+
+name: pharmacy-telegram-bot
+services:
+  - name: bot
+    # You can switch between "docker" and "buildpack" builds.
+    # Using docker by default:
+    src: .
+    type: web
+    routes:
+      - path: /
+    ports:
+      - port: 8080
+        protocol: http
+    healthcheck:
+      path: /health
+      interval: 10s
+      timeout: 5s
+      method: GET
+    env:
+      - key: BOT_TOKEN
+        value: ""
+      - key: ADMIN_CHAT_ID
+        value: "0"
+      - key: STORE_NAME
+        value: "Moein Pharmacy"
+      - key: STORE_ADDRESS
+        value: ""
+      - key: STORE_PHONE
+        value: ""
+    docker:
+      dockerfile: Dockerfile
+    # If you prefer buildpacks instead of docker, comment docker: above and uncomment below:
+    # buildpack:
+    #   run_command: python app.py
